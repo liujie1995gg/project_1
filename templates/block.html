@@ -1,0 +1,52 @@
+{% extends "test.html" %}
+{% block artic%}
+    <div id="main" class="inner home-inner">
+            <div class="job-list">
+                <div class="job-tab" data-filter="" data-keyword="" data-l3code="100109" data-rescount="165" data-page="1" data-source="2">
+                    <a href="{{ index }}" class="cur" ka="recommend-job-list">热门职位</a>
+                </div>
+
+                <ul>{% for i in a %}
+
+                    <li>{{i[0]}}</li>
+
+                    {% end for %}
+                            <li>
+                                  <div class="job-primary">
+                                    <div class="info-primary">
+                                        <h3 class="name">
+                                            <a href="{{ visual }}"  ka="search_list_1" target="_blank">
+                                                <div class="job-title">{{job_title}}</div>
+                                                <span class="red">{{treatment}}</span>
+                                                <div class="info-detail"></div>
+                                            </a>
+                                        </h3>
+                                        <p>{{area}}<em class="vline"></em>{{year}}<em class="vline"></em>{{education}}</p>
+                                    </div>
+                                    <div class="info-company">
+                                        <div class="company-text">
+                                            <h3 class="name"><a href="{{info}}"  target="_blank">{{company_name}}</a></h3>
+                                            <p>移动互联网<em class="vline"></em>不需要融资<em class="vline"></em>{{company_scale}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="info-publis">
+                                        <h3 class="name">林玲<em class="vline"></em>人事主管</h3>
+                                        <p>发布于07月20日</p>
+                                    </div>
+                                    <a href="/3.html">立即沟通
+                                    </a>
+                                </div>
+                            </li>
+
+                        </ul>
+
+<div class="page">
+    <a href="/c101200100-p100109/?page=2" >1</a>
+    <a href="/c101200100-p100109/?page=2">2</a>
+    <a href="/c101200100-p100109/?page=3" >3</a>
+    <span>...</span>
+    <a href="/c101200100-p100109/?page=2" class="next">></a>
+</div>
+            </div>
+    </div>
+                {% end block%}

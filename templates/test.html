@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6"><![endif]-->
+<!--[if IE 7 ]><html class="ie ie7"><![endif]-->
+<!--[if IE 8 ]><html class="ie ie8"><![endif]-->
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html class="standard"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>【武汉Python招聘】2018年武汉Python最新人才招聘信息-BOSS直聘</title>
+       <link href="{{ static_url('css/main.css')}}" type="text/css" rel="stylesheet">
+ </head>
+
+<body>
+<div id="header">
+    <div class="inner home-inner">
+        <div class="logo"></div>
+        <div class="nav">
+            <ul>
+                <li class=""><a  href="./">首页</a></li>
+            </ul>
+        </div>
+        <div class="user-nav">
+                    <!--未登录-->
+                    <div class="btns">
+                    <a href="{{regesit}}"  class="btn btn-outline">{{regesit_id}}</a>
+                    <a href="{{login}}" class="btn btn-outline">{{ id }}</a>
+                    <a href="{{ id3 }}" class="btn btn-outline">{{ id2 }}</a>
+                </div>
+     </div>
+    </div>
+</div>
+
+{% block artic%}
+<p>文章列表</p>
+{% end block%}
+
+
+</body>
+</html>
