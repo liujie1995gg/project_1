@@ -2,10 +2,10 @@ import time,json
 from tornado import gen
 import tornado.web
 from alipay import AliPay
-from xm_.setting import alipay_public_key_path,app_private_key_path,APPID,GETAWAY
+from setting import alipay_public_key_path,app_private_key_path,APPID,GETAWAY
 
-from xm_.ser_.herit import Req
-from xm_.ser_.redis_tor import A
+from ser_.herit import Req
+from ser_.redis_tor import A
 
 class MainHandler(Req):
     def get(self):
@@ -24,6 +24,7 @@ class login_in(Req):
     def get(self):
         self.render('login.html', regesit='./regesit', url='')
 
+    @gen.coroutine
     def post(self):
         try:
             nextname = self.get_argument('next')
@@ -40,6 +41,7 @@ class login_in(Req):
 
 
 class login_out(Req):
+
     def get(self):
         _ = self.do_thing(A.get_sec_cooke,self).result()
         self.redis_cook.delete(_)
@@ -48,8 +50,11 @@ class login_out(Req):
 
 
 class regesit_page(Req):
+    @gen.coroutine
     def get(self):
         self.render('regesit.html',url='')
+
+    @gen.coroutine
     def post(self):
         u =self.do_thing(A.post_t,self,regesit=True).result()
         if u:
@@ -138,13 +143,39 @@ class pay_check(Req):
 
 class joblist(Req):#未完成
     #@tornado.web.authenticated
+
     def get(self):
-        a = self.do_thing(A.get_retu_dict,self).result()#返回
-        list_ = self.do_thing(A.get_adve,self,3).result()#返回广告内容
-        self.render('block.html',**a,
-                    a=list_)
+        try:
+            b = int(self.get_argument('page'))
+            print(b,'bbbbbbbbbbbbbb',self.current_user)
+            if b == 1:
+                raise 1
+            if b <= 1:
+                raise 1
+            print(b,'进来')
+            a = self.do_thing(A.get_retu_dict, self).result()  # 返回
+            self.Upage = b - 1
+            self.Npage = b + 1
+            print('#'*100)
+            list_1 = self.do_thing(self.redis_cache.read, b).result()
+            self.render('block1.html', **a, id_1='./joblist', id_2='./joblist?page=%s' % self.Upage,
+                        id_3='joblist?page=%s' % self.Npage, b=list_1)
+            print('#' * 100)
+        except:
+            a = self.do_thing(A.get_retu_dict, self).result()
+            list_ = self.do_thing(A.get_adve,self,3).result()#返回广告内容
+            list_1 = self.do_thing(self.redis_cache.read).result()
+            self.render('block.html',**a,
+                        a=list_,b=list_1,id_1='./joblist?page=1',
+                        sumit1='1',id_2='./joblist?page=2',sumit2='2')
+
+class joblists(Req):
+    def get(self):
+        pass
+
 
 class jobxl(Req):
+    @gen.coroutine
     def get(self):
         a=self.do_thing(A.get_retu_dict,self).result()
         self.render('test1.html', **a)

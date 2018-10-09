@@ -1,6 +1,6 @@
-from xm_.view_ import *
+from view_ import *
 import tornado.web
-from xm_.setting import static_path,template_path,cookie_secret
+from setting import static_path,template_path,cookie_secret
 
 application_route=tornado.web.Application(
     [
@@ -12,6 +12,7 @@ application_route=tornado.web.Application(
     (r'/pay_check',pay_check),
     (r'/l_out',login_out),
     (r'/joblist',joblist),
+    (r'/joblists',joblists),
     (r'/jobxl',jobxl)
 
 ],

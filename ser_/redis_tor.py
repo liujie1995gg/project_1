@@ -1,4 +1,4 @@
-import redis,random
+import redis
 
 class redis_server(object):
     def __init__(self,host,port,db,password=None):
@@ -62,7 +62,7 @@ class A(object):
         password = self.get_body_argument('password')
         if self.redis_cook.redis_change(username,password):
             return username
-        elif A.Judge(self,username,password,**kwargs):
+        elif A.Judge(self,username,password,**kwargs):#这里去读redis
             return username
         return False
 
@@ -78,7 +78,6 @@ class A(object):
     def get_vip_redis(self,username):
         _ = self.redis_cook.get(username)
         _ = _.decode()
-        print(_,'这里是redis_')
         return _
 
 
@@ -104,12 +103,12 @@ class A(object):
     def get_retu_dict(self):##渲染页头字典
         id = '注册'
         id1 = '登录'
-        u = self.do_thing(A.get_sec_cooke, self).result()
+        u = A.get_sec_cooke(self)
         id2 = '成为会员'
         id3 = './pay'
         if u:
             id1 = u
-            u1 = self.do_thing(A.get_vip_redis, self, u).result()
+            u1 = A.get_vip_redis( self, u)
             if u1 == str(True):
                 id = ''
                 id2 = 'vip'
@@ -129,16 +128,20 @@ class A(object):
 
     @staticmethod
     def get_adve(self,num=3):
-        u = self.do_thing(A.get_sec_cooke, self).result()
+        u = A.get_sec_cooke(self)
         if u:
-            u1 = self.do_thing(A.get_vip_redis, self, u).result()
+            u1 = A.get_vip_redis(self, u)
             if u1 == str(True):#
                 #返回１０条
+                return []
+            else:
+                #返回7条
                 pass
-
         a = list()
-        c = self.session_.query(self.Adve_obj.bt_,self.Adve_obj.lj_).filter(self.Adve_obj.cs_!=0)[0:num]
+
+        #从广告数据库读取广告
+        #c = self.session_.query(self.Adve_obj.bt_,self.Adve_obj.lj_).filter(self.Adve_obj.cs_!=0)[0:num]
+        c = [('这是广告１',111),('广告２',2222),('广告３',333)]
         for i in c:
-            print(i,'####'*100)
             a.append(i)
         return a

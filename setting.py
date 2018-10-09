@@ -25,7 +25,7 @@ redis_config_cook={'redis_host':'127.0.0.1',
                 'redis_auth' : '',
                 'db':0,
                 'auth':'',
-                'time_':60,
+                'time_':60*3,
                    'defalite':'N',
                 }
 
@@ -33,7 +33,7 @@ redis_config_cook={'redis_host':'127.0.0.1',
 redis_config_cache={'redis_host':'127.0.0.1',
                 'redis_port' : 6379,
                 'redis_auth' : '',
-                'db':1,
+                'db':3,
                 'auth':'',
                     'time_':60
                 }

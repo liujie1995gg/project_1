@@ -1,8 +1,7 @@
 import tornado.ioloop
 import tornado.web
-from xm_.route_ import application_route
-from xm_.setting import port,address
-
+from route_ import application_route
+from setting import port,address
 
 if __name__ == "__main__":
     app = application_route
