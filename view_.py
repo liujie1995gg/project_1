@@ -178,4 +178,4 @@ class jobxl(Req):
     @gen.coroutine
     def get(self):
         a=self.do_thing(A.get_retu_dict,self).result()
-        self.render('test1.html', **a)
+        self.render('jobxl.html', **a)

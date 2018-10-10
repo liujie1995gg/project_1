@@ -39,3 +39,6 @@ class OperateRedis(object):
                 line -= 1
                 ids += 1
             return l
+
+    def read_id(self,id,name='extract'):
+        return pickle.loads(self.r.hget(name,id))
