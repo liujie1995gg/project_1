@@ -1,4 +1,4 @@
-import redis
+import redis,hashlib,time
 
 class redis_server(object):
     def __init__(self,host,port,db,password=None):
@@ -93,10 +93,11 @@ class A(object):
         return True
 
     @staticmethod
-    def set_state_user(self):#充值之后改状态为Ｙ
+    def set_state_user(self):#充值之后改状态为Ｙ#并重新设置值为Ｔrue
         _ = A.get_sec_cooke(self)
         self.session_.query(self.User_obj.username==_).update({self.User_obj.vip:'Y'})
         self.session_.commit()
+        self.redis_cook.setex(_,True,self.time_expire)
         return True
 
     @staticmethod
@@ -108,7 +109,7 @@ class A(object):
         id3 = './pay'
         if u:
             id1 = u
-            u1 = A.get_vip_redis( self, u)
+            u1 = A.get_vip_redis(self, u)
             if u1 == str(True):
                 id = ''
                 id2 = 'vip'
@@ -145,3 +146,11 @@ class A(object):
         for i in c:
             a.append(i)
         return a
+
+    @staticmethod
+    def get_md5():
+        m5 = hashlib.md5()
+        a= str(time.time())
+        m5.update(a.encode())
+        pasd= m5.hexdigest()
+        return pasd

@@ -65,7 +65,8 @@ class regesit_page(Req):
 class Alipay_page(Req):
     @tornado.web.authenticated
     def get(self):
-        a = 1154343440012#随机生成16位码
+        a = A.get_md5()#随机生成34位码
+        print(a)
         self.render('pay_index.html',
                     orderid=a,
                     post_pay='',

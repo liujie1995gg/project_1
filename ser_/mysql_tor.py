@@ -18,7 +18,7 @@ class Record(base):
     id =Column(Integer,primary_key=True,autoincrement=True)
     ip = Column(String(20))
     username = Column(String(20))
-    order_n = Column(String(16))
+    order_n = Column(String(34))
     code_ = Column(String(5))
     list_ = Column(String(50))
     time_ =Column(Date)
