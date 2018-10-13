@@ -27,7 +27,7 @@ class redis_server(object):
 
 class A(object):
     @staticmethod
-    def Judge(self,username,password,**kwargs):
+    def Judge(self,username,password,**kwargs):#这里是查询数据库的内容
         cur = self.session_.query(self.User_obj.username==username).filter(self.User_obj.password==password).first()
         if cur:
             _ = self.do_thing(A.get_vip,self,username).result()
@@ -56,7 +56,7 @@ class A(object):
             return False
 
 
-    @staticmethod
+    @staticmethod #这里取出u,p,拿到数据库进行比对
     def post_t(self,**kwargs):
         username = self.get_body_argument('username')
         password = self.get_body_argument('password')
@@ -93,6 +93,15 @@ class A(object):
         return True
 
     @staticmethod
+    def get_repet_mail(self,mail):#查询用户数据表是否有重复邮箱
+        try:
+            a = self.session_.query(self.User_obj.mail).filter(self.User_obj.mail==mail).first()
+            return a[0]
+        except:
+            return False
+
+
+    @staticmethod
     def set_state_user(self):#充值之后改状态为Ｙ#并重新设置值为Ｔrue
         _ = A.get_sec_cooke(self)
         self.session_.query(self.User_obj.username==_).update({self.User_obj.vip:'Y'})
@@ -102,33 +111,35 @@ class A(object):
 
     @staticmethod
     def get_retu_dict(self):##渲染页头字典
-        id = '注册'
+        id = '''<a href="./regesit"  class="btn btn-outline">注册</a>'''
         id1 = '登录'
         u = A.get_sec_cooke(self)
         id2 = '成为会员'
         id3 = './pay'
+        id4 =''
+        login ='./login'
         if u:
             id1 = u
             u1 = A.get_vip_redis(self, u)
             if u1 == str(True):
-                id = ''
+                id = '''<a href="./l_out" class="btn btn-outline" onclick = "return confirm('确认要退出登录吗?')">退出</a>'''
                 id2 = 'vip'
                 id3 = './'
+                login='#'
             else:
                 id = ''
                 pass
-        return {'regesit':'./regesit',
-                'regesit_id':id,
-                'login':'./login',
+        return {'folw':id,
+                'login':login,
                 'index': './index',
                 'visual':'./',
                 'info':'./',
                 'id':id1,
                 'id2':id2,
-                'id3':id3}
+                'id3':id3,}
 
     @staticmethod
-    def get_adve(self,num=3):
+    def get_adve(self,num=3):#这里是返回广告
         u = A.get_sec_cooke(self)
         if u:
             u1 = A.get_vip_redis(self, u)
@@ -148,9 +159,10 @@ class A(object):
         return a
 
     @staticmethod
-    def get_md5():
+    def get_md5():#这里是生成支付宝订单号
+        b = time.time()
         m5 = hashlib.md5()
-        a= str(time.time())
+        a= str(b+time.time())
         m5.update(a.encode())
         pasd= m5.hexdigest()
         return pasd

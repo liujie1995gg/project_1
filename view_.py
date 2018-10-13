@@ -12,14 +12,15 @@ class MainHandler(Req):
         self.write("Hello, world")
         self.write(self.request.remote_ip)
 
-class Main_page(Req):
+class Main_page(Req): #主页视图
     @gen.coroutine
     @tornado.web.authenticated
     def get(self):
-        _ = yield self.do_thing(A.get_sec_cooke,self)
+        _ = self.do_thing(A.get_sec_cooke,self).result()
         self.render('index.html',user=_)
 
-class login_in(Req):
+
+class login_in(Req):#登录视图
     @gen.coroutine
     def get(self):
         self.render('login.html', regesit='./regesit', url='')
@@ -40,8 +41,7 @@ class login_in(Req):
                 self.redirect('./login')
 
 
-class login_out(Req):
-
+class login_out(Req): #登出视图
     def get(self):
         _ = self.do_thing(A.get_sec_cooke,self).result()
         self.redis_cook.delete(_)
@@ -49,7 +49,7 @@ class login_out(Req):
         self.redirect('/login')
 
 
-class regesit_page(Req):
+class regesit_page(Req): #注册视图
     @gen.coroutine
     def get(self):
         self.render('regesit.html',url='')
@@ -62,7 +62,7 @@ class regesit_page(Req):
             self.redirect('/index')
 
 
-class Alipay_page(Req):
+class Alipay_page(Req): #支付视图
     @tornado.web.authenticated
     def get(self):
         a = A.get_md5()#随机生成34位码
@@ -99,7 +99,7 @@ class Alipay_page(Req):
         url = GETAWAY + "?" + order_string
         return {"code": 0, "message": "请求支付中","url": url}
 
-class pay_check(Req):
+class pay_check(Req): #支付检查
     def get(self):
         order_id= self.get_argument('order_id')
         a = self.check_pay(order_id)
@@ -142,7 +142,7 @@ class pay_check(Req):
                 time.sleep(3)
         return {"code": -2, "message": "失败"}
 
-class joblist(Req):#未完成
+class joblist(Req): #工作列表页面
     #@tornado.web.authenticated
 
     def get(self):
@@ -175,7 +175,7 @@ class joblists(Req):
         pass
 
 
-class jobxl(Req):
+class jobxl(Req): #工作详细
     @gen.coroutine
     def get(self):
         a=self.do_thing(A.get_retu_dict,self).result()

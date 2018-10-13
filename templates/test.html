@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% autoescape None %}
 <!--[if lt IE 7 ]><html class="ie ie6"><![endif]-->
 <!--[if IE 7 ]><html class="ie ie7"><![endif]-->
 <!--[if IE 8 ]><html class="ie ie8"><![endif]-->
@@ -22,9 +23,9 @@
         <div class="user-nav">
                     <!--未登录-->
                     <div class="btns">
-                    <a href="{{regesit}}"  class="btn btn-outline">{{regesit_id}}</a>
                     <a href="{{login}}" class="btn btn-outline">{{ id }}</a>
                     <a href="{{ id3 }}" class="btn btn-outline">{{ id2 }}</a>
+                        {{ folw }}
                 </div>
      </div>
     </div>

@@ -12,6 +12,7 @@ class User(base):
     password = Column(String(16))
     c_time = Column(Date)
     vip = Column(String(1))
+    mail = Column(String(20))
 
 class Record(base):
     __tablename__= 'record'
